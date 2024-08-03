@@ -1,0 +1,15 @@
+{
+  "name": "discord-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dpl": "workspace:@smbot/pl-downloader@*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

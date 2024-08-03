@@ -1,0 +1,29 @@
+{
+  "name": "sm-bot",
+  "version": "0.0.1",
+  "description": "Just a discord bot for music with friends",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "co": "sui-mono commit"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "music",
+    "owned"
+  ],
+  "author": "LeoLizc",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "@s-ui/mono": "^2.45.0",
+    "eslint": "9.x",
+    "eslint-config-canonical": "^43.0.14",
+    "globals": "^15.8.0",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^7.18.0"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@smbot/pl-downloader",
+  "version": "0.0.1",
+  "description": "",
+  "main": "download-playlist.js",
+  "scripts": {
+    "start": "ts-node src/download-playlist.ts",
+    "prepare": "tsc"
+  },
+  "dependencies": {
+    "@distube/ytdl-core": "^4.13.5",
+    "@distube/ytpl": "^1.2.1",
+    "ffmpeg-static": "^5.2.0",
+    "fluent-ffmpeg": "^2.1.3",
+    "prompts": "^2.4.2"
+  },
+  "bin": {
+    "dpl": "cli.js"
+  },
+  "author": "Leolizc",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@types/fluent-ffmpeg": "^2.1.25",
+    "@types/prompts": "^2.4.9",
+    "cli-progress": "^3.12.0"
+  }
+}
