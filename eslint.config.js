@@ -18,6 +18,12 @@ export default [
         { exceptAfterSingleLine: true },
       ],
       '@typescript-eslint/no-non-null-assertion': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+        },
+      ],
       'no-console': 'warn',
       'no-param-reassign': 'warn',
     },
