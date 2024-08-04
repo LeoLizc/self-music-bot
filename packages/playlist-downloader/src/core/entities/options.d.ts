@@ -14,7 +14,7 @@ export interface VideoOptions {
     | 'audio'
     | 'audioonly';
 
-  format?: videoFormat;
+  // format?: videoFormat;
 
   quality?:
     | 'lowest'
@@ -34,6 +34,7 @@ export interface VideoOptions {
   };
 }
 
+// TODO: Implement this interface later
 interface videoFormat {
   approxDurationMs?: string;
   audioChannels?: number;
