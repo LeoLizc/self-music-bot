@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "./src",  
-    "outDir": "./dist",
+    "outDir": "./dist/src",
+    "declarationDir": "./dist/typings",                           /* Specify the output directory for generated declaration files. */
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
 
   },

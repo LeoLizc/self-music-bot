@@ -2,10 +2,20 @@
   "name": "@smbot/pl-downloader",
   "version": "0.0.1",
   "description": "",
-  "main": "download-playlist.js",
+  "type": "module",
+  "module": "./dist/src/index.js",
+  "main": "dist/src/index.js",
+  "bin": {
+    "dpl": "cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "types": "dist/typings/**/*",
   "scripts": {
     "start": "ts-node src/download-playlist.ts",
-    "prepare": "tsc"
+    "build": "tsc",
+    "prepare": "pnpm build"
   },
   "dependencies": {
     "@distube/ytdl-core": "^4.13.5",
@@ -13,9 +23,6 @@
     "ffmpeg-static": "^5.2.0",
     "fluent-ffmpeg": "^2.1.3",
     "prompts": "^2.4.2"
-  },
-  "bin": {
-    "dpl": "cli.js"
   },
   "author": "Leolizc",
   "license": "UNLICENSED",

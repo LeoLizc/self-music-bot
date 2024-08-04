@@ -1,3 +1,4 @@
+/* eslint-disable canonical/filename-match-exported */
 import { type VideoOptions } from './core/entities/options';
 import { YoutubeService } from './infrastructure/service/youtube';
 import { PlayList } from './interface/playlist';
@@ -11,5 +12,6 @@ export const pldl = async (url: string, options?: VideoOptions) => {
 
 pldl.service = service;
 
+export default pldl;
 export { PlayList } from './interface/playlist';
 export { Video } from './interface/video';
