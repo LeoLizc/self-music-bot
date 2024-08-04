@@ -1,11 +1,14 @@
-import { type Video } from '../core/entities/media';
+import { type Video as IVideo } from '../core/entities/media';
 import { type VideoOptions } from '../core/entities/options';
 import { type Playlist as PlayListType } from '../core/entities/playlist';
+import { type YoutubeService } from '../core/services/youtube';
+import { Video } from './video';
 
 export class PlayList implements PlayListType {
   constructor(
     readonly playlist: PlayListType,
-    options: VideoOptions,
+    readonly _youtubeService: YoutubeService,
+    options?: VideoOptions,
   ) {
     this.id = playlist.id;
     this.title = playlist.title;
@@ -14,15 +17,19 @@ export class PlayList implements PlayListType {
     this.options = options;
   }
 
-  options: VideoOptions;
+  options?: VideoOptions;
   url: string;
   id: string;
   title: string;
-  videos: Video[];
+  videos: IVideo[];
 
   getFormattedTitle(): string {
     return this.title.replaceAll(/[^\dA-Za-z]/gu, '-');
   }
 
-  getFormattedVideos() {}
+  getFormattedVideos() {
+    return this.videos.map(
+      (video) => new Video(video, this._youtubeService, this.options),
+    );
+  }
 }
