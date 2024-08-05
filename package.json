@@ -15,6 +15,11 @@
   ],
   "author": "LeoLizc",
   "license": "UNLICENSED",
+  "dependencies": {
+    "@types/node": "^22.1.0",
+    "pldl": "workspace:@smbot/pl-downloader@^",
+    "preinstall": "pnpm --filter=\"@smbot/pl-downloader\" install"
+  },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
     "@s-ui/mono": "^2.45.0",

@@ -7,6 +7,16 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@types/node':
+        specifier: ^22.1.0
+        version: 22.1.0
+      pldl:
+        specifier: workspace:@smbot/pl-downloader@^
+        version: link:packages/playlist-downloader
+      preinstall:
+        specifier: pnpm --filter="@smbot/pl-downloader" install
+        version: link:pnpm --filter="@smbot/pl-downloader" install
     devDependencies:
       '@eslint/js':
         specifier: ^9.8.0
@@ -19,7 +29,7 @@ importers:
         version: 9.8.0
       eslint-config-canonical:
         specifier: ^43.0.14
-        version: 43.0.14(@babel/plugin-syntax-flow@7.24.7(@babel/core@7.25.2))(@babel/plugin-transform-react-jsx@7.25.2(@babel/core@7.25.2))(@types/node@22.0.0)(eslint@9.8.0)(typescript@5.5.4)
+        version: 43.0.14(@babel/plugin-syntax-flow@7.24.7(@babel/core@7.25.2))(@babel/plugin-transform-react-jsx@7.25.2(@babel/core@7.25.2))(@types/node@22.1.0)(eslint@9.8.0)(typescript@5.5.4)
       globals:
         specifier: ^15.8.0
         version: 15.8.0
@@ -28,7 +38,7 @@ importers:
         version: 3.3.3
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@types/node@22.0.0)(typescript@5.5.4)
+        version: 10.9.2(@types/node@22.1.0)(typescript@5.5.4)
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
@@ -36,17 +46,13 @@ importers:
         specifier: ^7.18.0
         version: 7.18.0(eslint@9.8.0)(typescript@5.5.4)
 
-  packages/discord-bot:
-    dependencies:
-      dpl:
-        specifier: workspace:@smbot/pl-downloader@*
-        version: link:../playlist-downloader
+  packages/discord-bot: {}
 
   packages/playlist-downloader:
     dependencies:
       '@distube/ytdl-core':
         specifier: ^4.13.5
-        version: 4.13.5
+        version: 4.14.1
       '@distube/ytpl':
         specifier: ^1.2.1
         version: 1.2.1
@@ -209,9 +215,9 @@ packages:
     resolution: {integrity: sha512-F9rL9k9Xjf5blCz8HsJRO4diy111cayL2vkY2XE4r4t3n0yPXVYy3KD3nJ1qbrSn9743UWSXH4IwuCa/HWlGFw==}
     engines: {node: '>=6.0.0'}
 
-  '@distube/ytdl-core@4.13.5':
-    resolution: {integrity: sha512-g+4UJIR/auAJbia7iB0aWvaJDbs22P53NySWa47b1NT4xMTDJYguxHFArPrvRkcJrb/AgKjv/XoSZGghpL0CJA==}
-    engines: {node: '>=16'}
+  '@distube/ytdl-core@4.14.1':
+    resolution: {integrity: sha512-ymtw6IZyyUAzE+9Nbnhxa7PcFkPI+5OF9ckJZtqnI7gHlEH41jew6Z/im7mOAhmmiy6ppYXoAL0GhJIGRSGR1g==}
+    engines: {node: '>=14.0'}
 
   '@distube/ytpl@1.2.1':
     resolution: {integrity: sha512-cp9nDYyGTZ2DNHURQXS76ptKWijLMspoxJEj03i++9tJf0LFGTWkskL3sLwcY4qQPLXjlH9FAXwwpjVttdXvZQ==}
@@ -461,8 +467,8 @@ packages:
   '@types/node@10.17.60':
     resolution: {integrity: sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw==}
 
-  '@types/node@22.0.0':
-    resolution: {integrity: sha512-VT7KSYudcPOzP5Q0wfbowyNLaVR8QWUdw+088uFWwfvpY6uCWaXpqV6ieLAu9WBcnTa7H4Z5RLK8I5t2FuOcqw==}
+  '@types/node@22.1.0':
+    resolution: {integrity: sha512-AOmuRF0R2/5j1knA3c6G3HOk523Ga+l+ZXltX8SF1+5oqcXijjfTd8fY3XRZqSihEu9XhtQnKYLmkFaoxgsJHw==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -2857,16 +2863,12 @@ packages:
   unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
 
-  undici-types@6.11.1:
-    resolution: {integrity: sha512-mIDEX2ek50x0OlRgxryxsenE5XaQD4on5U2inY7RApK3SOJpofyw7uW2AyfMKkhAxXIceo2DeWGVGwyvng1GNQ==}
+  undici-types@6.13.0:
+    resolution: {integrity: sha512-xtFJHudx8S2DSoujjMd1WeWvn7KKWFRESZTMeL1RptAYERu29D6jphMjjY+vn96jvN3kVPDNxU/E13VTaXj6jg==}
 
   undici@5.28.4:
     resolution: {integrity: sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g==}
     engines: {node: '>=14.0'}
-
-  undici@6.19.4:
-    resolution: {integrity: sha512-i3uaEUwNdkRq2qtTRRJb13moW5HWqviu7Vl7oYRYz++uPtGHJj+x7TGjcEuwS5Mt2P4nA0U9dhIX3DdB6JGY0g==}
-    engines: {node: '>=18.17'}
 
   universalify@0.2.0:
     resolution: {integrity: sha512-CJ1QgKmNg3CwvAv/kOFmtnEN05f0D/cn9QntgNOQlQF9dgvVTHj3t+8JPdjqawCHk7V/KA+fbUqzZ9XWhcqPUg==}
@@ -3220,14 +3222,14 @@ snapshots:
       http-response-object: 3.0.2
       parse-cache-control: 1.0.1
 
-  '@distube/ytdl-core@4.13.5':
+  '@distube/ytdl-core@4.14.1':
     dependencies:
-      http-cookie-agent: 6.0.5(tough-cookie@4.1.4)(undici@6.19.4)
+      http-cookie-agent: 6.0.5(tough-cookie@4.1.4)(undici@5.28.4)
       m3u8stream: 0.8.6
       miniget: 4.2.3
       sax: 1.4.1
       tough-cookie: 4.1.4
-      undici: 6.19.4
+      undici: 5.28.4
     transitivePeerDependencies:
       - supports-color
 
@@ -3276,7 +3278,7 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
-  '@graphql-eslint/eslint-plugin@3.20.1(@babel/core@7.25.2)(@types/node@22.0.0)(graphql@16.9.0)':
+  '@graphql-eslint/eslint-plugin@3.20.1(@babel/core@7.25.2)(@types/node@22.1.0)(graphql@16.9.0)':
     dependencies:
       '@babel/code-frame': 7.24.7
       '@graphql-tools/code-file-loader': 7.3.23(@babel/core@7.25.2)(graphql@16.9.0)
@@ -3286,7 +3288,7 @@ snapshots:
       debug: 4.3.6
       fast-glob: 3.3.2
       graphql: 16.9.0
-      graphql-config: 4.5.0(@types/node@22.0.0)(graphql@16.9.0)
+      graphql-config: 4.5.0(@types/node@22.1.0)(graphql@16.9.0)
       graphql-depth-limit: 1.1.0(graphql@16.9.0)
       lodash.lowercase: 4.3.0
       tslib: 2.6.3
@@ -3344,7 +3346,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@graphql-tools/executor-http@0.1.10(@types/node@22.0.0)(graphql@16.9.0)':
+  '@graphql-tools/executor-http@0.1.10(@types/node@22.1.0)(graphql@16.9.0)':
     dependencies:
       '@graphql-tools/utils': 9.2.1(graphql@16.9.0)
       '@repeaterjs/repeater': 3.0.6
@@ -3352,7 +3354,7 @@ snapshots:
       dset: 3.1.3
       extract-files: 11.0.0
       graphql: 16.9.0
-      meros: 1.3.0(@types/node@22.0.0)
+      meros: 1.3.0(@types/node@22.1.0)
       tslib: 2.6.3
       value-or-promise: 1.0.12
     transitivePeerDependencies:
@@ -3438,12 +3440,12 @@ snapshots:
       tslib: 2.6.3
       value-or-promise: 1.0.12
 
-  '@graphql-tools/url-loader@7.17.18(@types/node@22.0.0)(graphql@16.9.0)':
+  '@graphql-tools/url-loader@7.17.18(@types/node@22.1.0)(graphql@16.9.0)':
     dependencies:
       '@ardatan/sync-fetch': 0.0.1
       '@graphql-tools/delegate': 9.0.35(graphql@16.9.0)
       '@graphql-tools/executor-graphql-ws': 0.0.14(graphql@16.9.0)
-      '@graphql-tools/executor-http': 0.1.10(@types/node@22.0.0)(graphql@16.9.0)
+      '@graphql-tools/executor-http': 0.1.10(@types/node@22.1.0)(graphql@16.9.0)
       '@graphql-tools/executor-legacy-ws': 0.0.11(graphql@16.9.0)
       '@graphql-tools/utils': 9.2.1(graphql@16.9.0)
       '@graphql-tools/wrap': 9.4.2(graphql@16.9.0)
@@ -3604,7 +3606,7 @@ snapshots:
 
   '@types/fluent-ffmpeg@2.1.25':
     dependencies:
-      '@types/node': 22.0.0
+      '@types/node': 22.1.0
 
   '@types/json-schema@7.0.15': {}
 
@@ -3614,22 +3616,22 @@ snapshots:
 
   '@types/node@10.17.60': {}
 
-  '@types/node@22.0.0':
+  '@types/node@22.1.0':
     dependencies:
-      undici-types: 6.11.1
+      undici-types: 6.13.0
 
   '@types/normalize-package-data@2.4.4': {}
 
   '@types/prompts@2.4.9':
     dependencies:
-      '@types/node': 22.0.0
+      '@types/node': 22.1.0
       kleur: 3.0.3
 
   '@types/semver@7.5.8': {}
 
   '@types/ws@8.5.12':
     dependencies:
-      '@types/node': 22.0.0
+      '@types/node': 22.1.0
 
   '@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@7.18.0(eslint@9.8.0)(typescript@5.5.4))(eslint@9.8.0)(typescript@5.5.4)':
     dependencies:
@@ -4388,13 +4390,13 @@ snapshots:
       eslint: 9.8.0
       semver: 7.6.3
 
-  eslint-config-canonical@43.0.14(@babel/plugin-syntax-flow@7.24.7(@babel/core@7.25.2))(@babel/plugin-transform-react-jsx@7.25.2(@babel/core@7.25.2))(@types/node@22.0.0)(eslint@9.8.0)(typescript@5.5.4):
+  eslint-config-canonical@43.0.14(@babel/plugin-syntax-flow@7.24.7(@babel/core@7.25.2))(@babel/plugin-transform-react-jsx@7.25.2(@babel/core@7.25.2))(@types/node@22.1.0)(eslint@9.8.0)(typescript@5.5.4):
     dependencies:
       '@babel/core': 7.25.2
       '@babel/eslint-parser': 7.25.1(@babel/core@7.25.2)(eslint@9.8.0)
       '@babel/eslint-plugin': 7.25.1(@babel/eslint-parser@7.25.1(@babel/core@7.25.2)(eslint@9.8.0))(eslint@9.8.0)
       '@babel/plugin-syntax-import-assertions': 7.24.7(@babel/core@7.25.2)
-      '@graphql-eslint/eslint-plugin': 3.20.1(@babel/core@7.25.2)(@types/node@22.0.0)(graphql@16.9.0)
+      '@graphql-eslint/eslint-plugin': 3.20.1(@babel/core@7.25.2)(@types/node@22.1.0)(graphql@16.9.0)
       '@next/eslint-plugin-next': 14.2.5
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0(eslint@9.8.0)(typescript@5.5.4))(eslint@9.8.0)(typescript@5.5.4)
       '@typescript-eslint/parser': 7.18.0(eslint@9.8.0)(typescript@5.5.4)
@@ -5106,13 +5108,13 @@ snapshots:
 
   graphemer@1.4.0: {}
 
-  graphql-config@4.5.0(@types/node@22.0.0)(graphql@16.9.0):
+  graphql-config@4.5.0(@types/node@22.1.0)(graphql@16.9.0):
     dependencies:
       '@graphql-tools/graphql-file-loader': 7.5.17(graphql@16.9.0)
       '@graphql-tools/json-file-loader': 7.4.18(graphql@16.9.0)
       '@graphql-tools/load': 7.8.14(graphql@16.9.0)
       '@graphql-tools/merge': 8.4.2(graphql@16.9.0)
-      '@graphql-tools/url-loader': 7.17.18(@types/node@22.0.0)(graphql@16.9.0)
+      '@graphql-tools/url-loader': 7.17.18(@types/node@22.1.0)(graphql@16.9.0)
       '@graphql-tools/utils': 9.2.1(graphql@16.9.0)
       cosmiconfig: 8.0.0
       graphql: 16.9.0
@@ -5176,12 +5178,12 @@ snapshots:
     dependencies:
       lru-cache: 6.0.0
 
-  http-cookie-agent@6.0.5(tough-cookie@4.1.4)(undici@6.19.4):
+  http-cookie-agent@6.0.5(tough-cookie@4.1.4)(undici@5.28.4):
     dependencies:
       agent-base: 7.1.1
       tough-cookie: 4.1.4
     optionalDependencies:
-      undici: 6.19.4
+      undici: 5.28.4
     transitivePeerDependencies:
       - supports-color
 
@@ -5550,9 +5552,9 @@ snapshots:
 
   merge2@1.4.1: {}
 
-  meros@1.3.0(@types/node@22.0.0):
+  meros@1.3.0(@types/node@22.1.0):
     optionalDependencies:
-      '@types/node': 22.0.0
+      '@types/node': 22.1.0
 
   micro-spelling-correcter@1.1.1: {}
 
@@ -6234,14 +6236,14 @@ snapshots:
     dependencies:
       typescript: 5.5.4
 
-  ts-node@10.9.2(@types/node@22.0.0)(typescript@5.5.4):
+  ts-node@10.9.2(@types/node@22.1.0)(typescript@5.5.4):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 22.0.0
+      '@types/node': 22.1.0
       acorn: 8.12.1
       acorn-walk: 8.3.3
       arg: 4.1.3
@@ -6343,13 +6345,11 @@ snapshots:
       has-symbols: 1.0.3
       which-boxed-primitive: 1.0.2
 
-  undici-types@6.11.1: {}
+  undici-types@6.13.0: {}
 
   undici@5.28.4:
     dependencies:
       '@fastify/busboy': 2.1.1
-
-  undici@6.19.4: {}
 
   universalify@0.2.0: {}
 
