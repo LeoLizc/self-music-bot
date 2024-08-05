@@ -3,6 +3,7 @@
 import pldl from '.';
 import ffmpegPath from 'ffmpeg-static';
 import ffmpeg from 'fluent-ffmpeg';
+import fs from 'fs';
 import prompts from 'prompts';
 
 (async () => {
@@ -59,20 +60,20 @@ import prompts from 'prompts';
       {
         active: 'Yes',
         inactive: 'No',
-        message: 'Do you want any specific audio format?',
+        message: 'Do you want any specific audio format? (Default: mp3)',
         name: 'audioFormat',
         type: (previous) => (previous === 'audioonly' ? 'toggle' : null),
       },
       {
         choices: [
-          { title: 'mp3', value: '.mp3' },
-          { title: 'm4a', value: '.m4a' },
-          { title: 'opus', value: '.opus' },
-          { title: 'vorbis', value: '.vorbis' },
-          { title: 'wav', value: '.wav' },
-          { title: 'flac', value: '.flac' },
-          { title: 'aac', value: '.aac' },
-          { title: 'webm', value: '.webm' },
+          { title: 'mp3', value: 'mp3' },
+          { title: 'm4a', value: 'm4a' },
+          { title: 'opus', value: 'opus' },
+          { title: 'vorbis', value: 'vorbis' },
+          { title: 'wav', value: 'wav' },
+          { title: 'flac', value: 'flac' },
+          { title: 'aac', value: 'aac' },
+          { title: 'webm', value: 'webm' },
           { title: 'any', value: undefined },
         ],
         hint: '(Default: mp3)',
@@ -127,18 +128,17 @@ import prompts from 'prompts';
   const url = response.url;
   const result = {
     format:
-      response.audioFormat ??
-      (response.filter === 'audioonly' ? '.mp3' : '.mp4'),
+      response.audioFormat || (response.filter === 'audioonly' ? 'mp3' : 'mp4'),
 
-    outputDir: response.outputDir ?? './music',
+    outputDir: response.outputDir || './music',
 
     playlistOptions: {
-      limit: response.limit ?? undefined,
+      limit: response.limit || undefined,
     },
 
     videoOptions: {
-      filter: response.filter ?? 'audioandvideo',
-      quality: response.quality ?? undefined,
+      filter: response.filter || 'audioandvideo',
+      quality: response.quality || undefined,
     },
   };
 
@@ -158,6 +158,23 @@ import prompts from 'prompts';
   if (!confirmation) {
     console.log('Download canceled');
     process.exit(0);
+  }
+
+  if (!fs.existsSync(result.outputDir)) {
+    const { createDir } = await prompts({
+      active: 'Yes',
+      inactive: 'No',
+      message: `Directory ${result.outputDir} does not exist. Do you want to create it?`,
+      name: 'createDir',
+      type: 'toggle',
+    });
+
+    if (createDir) {
+      fs.mkdirSync(result.outputDir);
+    } else {
+      console.log('Download canceled');
+      process.exit(0);
+    }
   }
 
   const videos = await playlist.getFormattedVideos();
@@ -189,7 +206,7 @@ import prompts from 'prompts';
       group.map(async (video) => {
         const stream = (await video.getStream()).stream;
 
-        const outputPath = `${result.outputDir}/${video.getFormatedTitle()}${
+        const outputPath = `${result.outputDir}/${video.getFormatedTitle()}.${
           result.format
         }`;
 
@@ -199,7 +216,7 @@ import prompts from 'prompts';
           await new Promise((resolve, reject) => {
             ffmpeg(stream)
               .audioBitrate(128)
-              .toFormat(result.format.slice(1))
+              .toFormat(result.format)
               .save(outputPath)
               .on('end', () => {
                 resolve(true);
@@ -215,10 +232,10 @@ import prompts from 'prompts';
         }
 
         console.log(`Downloaded ${video.title}`);
-        console.error(errors);
       }),
     );
   }
 
   console.log('Download completed');
+  console.error(errors);
 })();
