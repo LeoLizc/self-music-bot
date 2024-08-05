@@ -244,4 +244,6 @@ import prompts from 'prompts';
 
   console.log('Download completed');
   console.error(errors);
+
+  process.exit(0);
 })();
