@@ -1,4 +1,4 @@
-import { type Stream } from 'stream';
+import { type Readable } from 'stream';
 
 export interface Video {
   duration: string | null;
@@ -9,7 +9,7 @@ export interface Video {
 
 export interface StreamMedia {
   id: string;
-  stream: Stream;
+  stream: Readable;
   title: string;
   url: string;
 }
