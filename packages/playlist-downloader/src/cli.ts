@@ -74,9 +74,10 @@ import prompts from 'prompts';
           { title: 'flac', value: 'flac' },
           { title: 'aac', value: 'aac' },
           { title: 'webm', value: 'webm' },
-          { title: 'any', value: undefined },
+          { title: 'Any', value: null },
         ],
         hint: '(Default: mp3)',
+        initial: 8,
         message: 'Choose the audio format',
         name: 'audioFormat',
         type: (previous, values) =>
@@ -84,14 +85,15 @@ import prompts from 'prompts';
       },
       {
         choices: [
+          { title: 'Any', value: null },
           { title: 'Lowest', value: 'lowest' },
           { title: 'Highest', value: 'highest' },
           { title: 'Highest Audio', value: 'highestaudio' },
           { title: 'Lowest Audio', value: 'lowestaudio' },
           { title: 'Highest Video', value: 'highestvideo' },
           { title: 'Lowest Video', value: 'lowestvideo' },
-          { title: 'any', value: null },
         ],
+        initial: 0,
         message: 'choose the quality of the video',
         name: 'quality',
         type: 'select',
@@ -150,6 +152,7 @@ import prompts from 'prompts';
   const { confirmation } = await prompts({
     active: 'Yes',
     inactive: 'No',
+    initial: true,
     message: `Do you want to download ${playlist.title}?`,
     name: 'confirmation',
     type: 'toggle',
@@ -164,6 +167,7 @@ import prompts from 'prompts';
     const { createDir } = await prompts({
       active: 'Yes',
       inactive: 'No',
+      initial: true,
       message: `Directory ${result.outputDir} does not exist. Do you want to create it?`,
       name: 'createDir',
       type: 'toggle',
@@ -234,6 +238,8 @@ import prompts from 'prompts';
         console.log(`Downloaded ${video.title}`);
       }),
     );
+
+    console.log('');
   }
 
   console.log('Download completed');
