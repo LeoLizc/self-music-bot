@@ -5,7 +5,7 @@
   "module": "./dist/src/index.js",
   "main": "dist/src/index.js",
   "bin": {
-    "dpl": "cli.js"
+    "pldl": "dist/src/cli.js"
   },
   "files": [
     "dist"
