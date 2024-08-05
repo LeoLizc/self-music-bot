@@ -26,7 +26,7 @@ export class Video implements IVideo {
   getFormatedTitle() {
     return this.title
       .replaceAll(/[^\d\sA-Za-zÁÉÍÑÓÚÜáéíñóúü]/gu, '')
-      .replaceAll(/\s+/gu, ' ')
+      .replaceAll(/\s{2,}/gu, ' - ')
       .trim();
   }
 }
