@@ -22,4 +22,11 @@ export class Video implements IVideo {
   getStream() {
     return this._youtubeService.downloadVideo(this.video, this.options);
   }
+
+  getFormatedTitle() {
+    return this.title
+      .replaceAll(/[^\d\sA-Za-zÁÉÍÑÓÚÜáéíñóúü]/gu, '')
+      .replaceAll(/\s+/gu, ' ')
+      .trim();
+  }
 }
