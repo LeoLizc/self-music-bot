@@ -50,7 +50,8 @@ export class YoutubeService implements YTService {
           duration: video.duration,
           id: video.id,
           title: video.title,
-          url: video.url,
+          // Video has bad typing
+          url: (video as unknown as { shortUrl: string }).shortUrl,
         };
       }),
     };
