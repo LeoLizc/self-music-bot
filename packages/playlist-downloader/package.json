@@ -2,7 +2,6 @@
   "name": "@smbot/pl-downloader",
   "version": "0.0.1",
   "description": "",
-  "type": "module",
   "module": "./dist/src/index.js",
   "main": "dist/src/index.js",
   "bin": {
