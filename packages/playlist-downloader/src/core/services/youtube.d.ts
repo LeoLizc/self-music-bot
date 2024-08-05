@@ -16,4 +16,8 @@ export interface YoutubeService {
   ) => Promise<Playlist>;
 
   getVideo: (videoId: string) => Promise<Video>;
+
+  validatePlaylistUrl: (url: string) => boolean;
+
+  validateVideoUrl: (url: string) => boolean;
 }

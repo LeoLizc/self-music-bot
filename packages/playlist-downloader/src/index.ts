@@ -19,6 +19,8 @@ export const pldl = async (url: string, options?: PldlOptionsType) => {
 };
 
 pldl.service = service;
+pldl.validatePlaylistUrl = service.validatePlaylistUrl;
+pldl.validateVideoUrl = service.validateVideoUrl;
 
 export default pldl;
 export { PlayList } from './interface/playlist';

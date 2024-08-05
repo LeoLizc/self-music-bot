@@ -66,4 +66,12 @@ export class YoutubeService implements YTService {
       url: info.videoDetails.video_url,
     };
   }
+
+  validatePlaylistUrl(url: string): boolean {
+    return ytpl.validateID(url);
+  }
+
+  validateVideoUrl(url: string): boolean {
+    return ytdl.validateURL(url);
+  }
 }
