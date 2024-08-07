@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "co": "sui-mono commit"
+    "co": "sui-mono commit",
+    "preinstall": "pnpm --filter=\"@smbot/pl-downloader\" install"
   },
   "keywords": [
     "discord",
@@ -16,11 +17,10 @@
   "author": "LeoLizc",
   "license": "UNLICENSED",
   "dependencies": {
-    "@types/node": "^22.1.0",
-    "pldl": "workspace:@smbot/pl-downloader@^",
-    "preinstall": "pnpm --filter=\"@smbot/pl-downloader\" install"
+    "pldl": "workspace:@smbot/pl-downloader@^"
   },
   "devDependencies": {
+    "@types/node": "^22.1.0",
     "@eslint/js": "^9.8.0",
     "@s-ui/mono": "^2.45.0",
     "eslint": "9.x",
