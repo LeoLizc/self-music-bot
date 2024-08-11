@@ -8,15 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@types/node':
-        specifier: ^22.1.0
-        version: 22.1.0
       pldl:
         specifier: workspace:@smbot/pl-downloader@^
         version: link:packages/playlist-downloader
-      preinstall:
-        specifier: pnpm --filter="@smbot/pl-downloader" install
-        version: link:pnpm --filter="@smbot/pl-downloader" install
     devDependencies:
       '@eslint/js':
         specifier: ^9.8.0
@@ -24,6 +18,9 @@ importers:
       '@s-ui/mono':
         specifier: ^2.45.0
         version: 2.45.0
+      '@types/node':
+        specifier: ^22.1.0
+        version: 22.1.0
       eslint:
         specifier: 9.x
         version: 9.8.0
