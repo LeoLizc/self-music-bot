@@ -22,6 +22,7 @@ export default [
         'warn',
         {
           argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
         },
       ],
       'no-console': 'warn',
