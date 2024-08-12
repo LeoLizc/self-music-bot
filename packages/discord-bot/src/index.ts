@@ -8,9 +8,9 @@ export const client = DiscFactory.create({
   modules: [playerModule],
 });
 
-DiscFactory.updateAppCommands(client, {
-  clientId: CONFIG.clientId,
-  token: CONFIG.token,
-});
-
-client.login(CONFIG.token);
+client
+  .login(CONFIG.token)
+  .then(() => {
+    console.log('Logged in!');
+  })
+  .catch(console.error);
