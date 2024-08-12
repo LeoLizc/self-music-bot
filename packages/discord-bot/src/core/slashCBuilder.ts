@@ -1,4 +1,7 @@
-import { CommandJsonResolvable, type SlashCommandAction } from './types/sCBuilder';
+import {
+  type CommandJsonResolvable,
+  type SlashCommandAction,
+} from './types/sCBuilder';
 import {
   type RESTPostAPIChatInputApplicationCommandsJSONBody,
   SlashCommandBuilder as SCB,
