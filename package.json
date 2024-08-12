@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "co": "sui-mono commit",
-    "preinstall": "cd ./packages/playlist-downloader && pnpm --filter=\"@smbot/pl-downloader\" install"
+    "postinstall": "cd ./packages/playlist-downloader && pnpm --filter=\"@smbot/pl-downloader\" build"
   },
   "keywords": [
     "discord",
