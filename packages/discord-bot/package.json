@@ -4,7 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/src/index.js",
+    "register": "node dist/src/register.js",
+    "build:start": "npm run build && npm run start",
+    "build:register": "npm run build && npm run register"
   },
   "dependencies": {
     "discord.js": "^14.15.3",
