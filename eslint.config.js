@@ -17,6 +17,23 @@ export default [
         'always',
         { exceptAfterSingleLine: true },
       ],
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          format: ['camelCase', 'UPPER_CASE'],
+          leadingUnderscore: 'allow',
+          selector: 'variable',
+        },
+        {
+          format: ['camelCase'],
+          leadingUnderscore: 'allow',
+          selector: 'function',
+        },
+        {
+          format: ['PascalCase'],
+          selector: 'typeLike',
+        },
+      ],
       '@typescript-eslint/no-non-null-assertion': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
