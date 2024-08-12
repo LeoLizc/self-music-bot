@@ -16,6 +16,7 @@ export const DiscFactory = {
     
     return client;
   },
+
   registerModules(client: Client, modules: Module[]) {
     modules.forEach(module => {
       module.register(client);
@@ -30,6 +31,7 @@ export const DiscFactory = {
       if (!command) return;
       
       try {
+        console.info(`Command ${command.name} executed by ${interaction.user.tag}`);
         await command.action(interaction);
         
         if (interaction.replied) return;
