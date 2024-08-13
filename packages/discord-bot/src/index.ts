@@ -1,10 +1,9 @@
 import { CONFIG } from './config';
 import { DiscFactory } from './core';
 import { playerModule } from './player';
-import { GatewayIntentBits } from 'discord.js';
 
 export const client = DiscFactory.create({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
+  intents: CONFIG.intents,
   modules: [playerModule],
 });
 

@@ -13,8 +13,11 @@
     "build:register": "npm run build && npm run register"
   },
   "dependencies": {
+    "@discordjs/voice": "^0.17.0",
     "discord.js": "^14.15.3",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "libsodium-wrappers": "^0.7.14",
+    "pldl": "workspace:@smbot/pl-downloader@^"
   },
   "keywords": [],
   "author": "",

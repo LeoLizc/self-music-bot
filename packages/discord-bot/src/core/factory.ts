@@ -55,11 +55,13 @@ export const DiscFactory = {
       return command.toJSON()
     })
     
+    console.log('Updating commands', commands);
     restClient.put(
       Routes.applicationCommands(clientId),
       {
         body: commands,
       },
-    );
+    ).then(res => console.log)
+    .catch(console.error);
   },
 };
