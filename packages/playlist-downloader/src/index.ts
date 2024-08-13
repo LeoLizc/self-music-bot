@@ -13,7 +13,21 @@ interface PldlOptionsType {
   videoOptions?: VideoOptions;
 }
 
-export const pldl = async (url: string, options?: PldlOptionsType) => {
+type PldlTypeFunctionType = (
+  url: string,
+  options?: PldlOptionsType,
+) => Promise<PlayList>;
+
+interface PldlType extends PldlTypeFunctionType {
+  service: YoutubeService;
+  validatePlaylistUrl: (url: string) => boolean;
+  validateVideoUrl: (url: string) => boolean;
+}
+
+export const pldl: PldlType = async (
+  url: string,
+  options?: PldlOptionsType,
+) => {
   const playlist = await service.getPlaylist(url, options?.playlistOptions);
   return new PlayList(playlist, service, options?.videoOptions);
 };

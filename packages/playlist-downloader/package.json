@@ -10,7 +10,7 @@
   "files": [
     "dist"
   ],
-  "types": "dist/typings/**/*",
+  "types": "./dist/typings",
   "scripts": {
     "start": "ts-node src/download-playlist.ts",
     "build": "tsc",
