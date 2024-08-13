@@ -40,11 +40,12 @@ export class PlaylistManager {
 
   async playNext() {
     if (this.songs.length === 0) {
-      return;
+      return false;
     }
 
     const song = this.songs.shift()!;
 
+    // eslint-disable-next-line no-console
     console.log(`Playing url: "${song}"`);
 
     const stream = await pldl.service.downloadVideoUrl(song, {
@@ -54,11 +55,16 @@ export class PlaylistManager {
 
     const resource = createAudioResource(stream.stream);
     this.player.play(resource);
+    return true;
   }
 
   async skip() {
+    if (this.songs.length === 0) {
+      return false;
+    }
+
     this.player.stop();
-    await this.playNext();
+    return await this.playNext();
   }
 
   async stop() {

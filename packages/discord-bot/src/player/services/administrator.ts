@@ -33,7 +33,14 @@ export class PlaylistAdministratorService {
     return this.map.get(guildId);
   }
 
-  get(channel: VoiceBasedChannel, createIfNotExists = true) {
+  get(channel: VoiceBasedChannel): PlaylistManager | undefined;
+  get(channel: VoiceBasedChannel, createIfNotExists: true): PlaylistManager;
+  get(
+    channel: VoiceBasedChannel,
+    // eslint-disable-next-line @typescript-eslint/unified-signatures
+    createIfNotExists: false,
+  ): PlaylistManager | undefined;
+  get(channel: VoiceBasedChannel, createIfNotExists = false) {
     const guildId = channel.guild.id;
     if (!this.map.has(guildId) && createIfNotExists) {
       this.create(channel);
