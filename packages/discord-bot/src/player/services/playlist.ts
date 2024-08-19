@@ -32,9 +32,23 @@ export class PlaylistManager {
     await this.checkAndPlay();
   }
 
+  async addPlaylist(playlistURL: string) {
+    console.log('Playlist:', this.songs);
+    const playlist = await pldl(playlistURL);
+    console.log('Playlist:', this.songs);
+
+    for (const song of playlist.videos) {
+      this.songs.push(song.url);
+    }
+
+    await this.checkAndPlay();
+  }
+
   private async checkAndPlay() {
     if (this.player.state.status === AudioPlayerStatus.Idle) {
       await this.playNext();
+    } else {
+      console.log('No se puede reproducir', this.player.state.status);
     }
   }
 
@@ -63,7 +77,7 @@ export class PlaylistManager {
       return false;
     }
 
-    this.player.stop();
+    // this.player.stop();
     return await this.playNext();
   }
 
