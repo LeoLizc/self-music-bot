@@ -3,10 +3,10 @@ import {
   type PlaylistOptions,
   type VideoOptions,
 } from './core/entities/options';
-import { YoutubeService } from './infrastructure/service/youtube';
+import { InvidiousService } from './infrastructure/service/invidious';
 import { PlayList } from './interface/playlist';
 
-const service = new YoutubeService();
+const service = new InvidiousService();
 
 interface PldlOptionsType {
   playlistOptions?: PlaylistOptions;
@@ -19,7 +19,7 @@ type PldlTypeFunctionType = (
 ) => Promise<PlayList>;
 
 interface PldlType extends PldlTypeFunctionType {
-  service: YoutubeService;
+  service: InvidiousService;
   validatePlaylistUrl: (url: string) => boolean;
   validateVideoUrl: (url: string) => boolean;
 }
