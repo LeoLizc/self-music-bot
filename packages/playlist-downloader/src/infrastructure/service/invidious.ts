@@ -1,4 +1,5 @@
 // eslint-disable-next-line simple-import-sort/imports
+import { parse } from 'node-html-parser';
 import { type StreamMedia, type Video } from '../../core/entities/media';
 import {
   type VideoOptions,
@@ -18,23 +19,47 @@ export class InvidiousService implements YTService {
     const videoId: string = ytdl.getVideoID(url);
     const response = await fetch(`${this.baseUrl}/videos/${videoId}`);
     const info = await response.json();
-    const stream = await this.fetchStream(videoId);
+
+    // with adaptativeFormats from the JSON
+    // const downloadUrl =
+    //   info['adaptiveFormats'].find(
+    //     (x: { type: string }) => x.type === 'audio/mp4; codecs="mp4a.40.2"',
+    //   ).url || info['adaptiveFormats'][0].url;
+
+    // from HTML with scrapping
+    const responseHtml = await fetch(`https://yewtu.be/watch?v=${videoId}`);
+    const html = await responseHtml.text();
+    // const $ = load(html);
+
+    const root = parse(html);
+    const sources = root.querySelectorAll('#player-container video source');
+
+    if (!sources.length) {
+      throw new Error('No <source/> elements found');
+    }
+
+    const source = sources[sources.length - 1];
+    const eslintNoDejaPonerSrcxd = source.getAttribute('src');
+
+    if (!eslintNoDejaPonerSrcxd) {
+      throw new Error('No src attribute found in <source/> element of html');
+    }
+
+    const downloadUrl =
+      'https://invidious.reallyaweso.me' + eslintNoDejaPonerSrcxd;
+
+    const stream = await this.fetchStream(downloadUrl);
 
     return {
       id: info.videoId,
       stream,
       title: info.title,
-      url:
-        info.adaptiveFormats.find(
-          (format: { type: string }) =>
-            format.type === 'audio/mp4; codecs="mp4a.40.2"',
-        )?.url || info.adaptiveFormats[0].url,
+      url,
     };
   }
 
   async downloadVideo(video: Video): Promise<StreamMedia> {
-    const videoId: string = ytdl.getVideoID(video.url);
-    const stream = await this.fetchStream(videoId);
+    const stream = await this.fetchStream(video.url);
 
     return {
       id: video.id,
@@ -46,6 +71,7 @@ export class InvidiousService implements YTService {
 
   async getPlaylist(url: string, _?: PlaylistOptions): Promise<Playlist> {
     const playlistId: string = await ytpl.getPlaylistID(url);
+
     const response = await fetch(`${this.baseUrl}/playlists/${playlistId}`);
     const playlist = await response.json();
 
@@ -53,7 +79,7 @@ export class InvidiousService implements YTService {
       id: playlist.playlistId,
       title: playlist.title,
       url,
-      videos: playlist.items.map((video: Record<string, unknown>) => ({
+      videos: playlist.videos.map((video: Record<string, unknown>) => ({
         duration: video.lengthSeconds,
         id: video.videoId,
         title: video.title,
@@ -80,8 +106,12 @@ export class InvidiousService implements YTService {
     return ytdl.validateURL(url);
   }
 
-  async fetchStream(videoId: string): Promise<Readable> {
-    const response = await fetch(`${this.baseUrl}/videos/${videoId}`);
+  async fetchStream(url: string): Promise<Readable> {
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'insomnia/2023.5.8',
+      },
+    });
 
     if (!response.ok) {
       throw new Error(`Error en la descarga: ${response.statusText}`);
