@@ -22,8 +22,10 @@ builder.setAction(async (interaction) => {
   }
 
   await interaction.deferReply({ ephemeral: true });
+  const song = playlist.songs[0];
+
   if (await playlist.skip()) {
-    await interaction.editReply('Reproduciendo siguiente canción');
+    await interaction.editReply(`Reproduciendo siguiente canción: ${song}`);
   } else {
     await interaction.reply('No hay más canciones en la lista');
   }
