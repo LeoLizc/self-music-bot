@@ -80,6 +80,11 @@ export class PlaylistManager {
 
   async addSong({ embed, url, insertFirst }: AddSongParameters) {
     const video = await pldl.service.getVideo(url);
+
+    if (video.title === '[Deleted video]') {
+      throw new Error("Video unavailable");
+    }
+
     const song = { ...video, embed };
 
     if (insertFirst) {
@@ -96,11 +101,15 @@ export class PlaylistManager {
     const playlist = await pldl(url);
 
     for (const video of playlist.videos) {
+      if (video.title === '[Deleted video]') continue;
       this.songs.push({
         ...video,
         embed,
       });
     }
+    
+    const playlistOriginal = playlist;
+    playlistOriginal.videos = Array.from(this.songs);
 
     this.checkAndPlay().catch(console.error);
     return playlist;

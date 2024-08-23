@@ -107,7 +107,6 @@ export class InvidiousService implements YTService {
         errorHtml = undefined;
         break;
       } catch (error) {
-        // if (error instanceof Error && error.name === 'AbortError') {}
         errorHtml = error;
         this.nextBaseUrl();
       }
@@ -165,7 +164,7 @@ export class InvidiousService implements YTService {
     }
 
     if (playlist['error']) {
-      throw new Error(playlist['error']);
+      throw new Error('Playlist unavailable');
     }
 
     return {

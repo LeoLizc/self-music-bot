@@ -45,7 +45,6 @@ builder.setAction(async (interaction) => {
     const embedInfo = playlistBuilder.build({
       action: 'Playlist añadida',
       avatarUrl: embed.avatarUrl,
-      songThumbnail: embed.songThumbnail,
       title: playlistInfo.title,
       url: playlistInfo.url,
       username: embed.username,
@@ -71,8 +70,8 @@ builder.setAction(async (interaction) => {
     }
   } catch (error) {
     console.error(error instanceof Error && error.message);
-    if (error instanceof Error && error.message === 'Video unavailable') {
-      await interaction.reply('Video no disponible');
+    if (error instanceof Error && error.message === 'Playlist unavailable') {
+      await interaction.reply('Playlist no disponible');
     } else {
       await interaction.reply('Ocurrió un error');
     }
