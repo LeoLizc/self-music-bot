@@ -1,9 +1,11 @@
 import { PlaylistManager } from './playlist';
 import {
   createAudioPlayer,
+  entersState,
   getVoiceConnection,
   joinVoiceChannel,
   NoSubscriberBehavior,
+  VoiceConnectionStatus,
 } from '@discordjs/voice';
 import { type VoiceBasedChannel } from 'discord.js';
 
@@ -27,10 +29,24 @@ export class PlaylistAdministratorService {
       });
     }
 
-    this.map.set(guildId, new PlaylistManager(guildId, player));
+    const manager = new PlaylistManager(guildId, player, channel);
+    this.map.set(guildId, manager);
     connection.subscribe(player);
 
-    return this.map.get(guildId);
+    connection.on(VoiceConnectionStatus.Disconnected, async () => {
+      try {
+        await Promise.race([
+          entersState(connection, VoiceConnectionStatus.Signalling, 5_000),
+          entersState(connection, VoiceConnectionStatus.Connecting, 5_000),
+        ]);
+        // Seems to be reconnecting to a new channel - ignore disconnect
+      } catch {
+        // Seems to be a real disconnect which SHOULDN'T be recovered from
+        manager.stop();
+        connection.destroy();
+        this.map.delete(guildId);
+      }
+    });
   }
 
   get(channel: VoiceBasedChannel): PlaylistManager | undefined;
