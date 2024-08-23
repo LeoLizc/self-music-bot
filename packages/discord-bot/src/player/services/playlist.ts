@@ -1,23 +1,74 @@
 import { shuffle } from '../../utils/array';
+import songBuilder from '../ux/song';
 import {
   type AudioPlayer,
   AudioPlayerStatus,
   createAudioResource,
 } from '@discordjs/voice';
+import { type VoiceBasedChannel } from 'discord.js';
 import { pldl } from 'pldl';
+
+interface Embed {
+  avatarUrl: string | null;
+  songThumbnail: string | null;
+  username: string;
+}
+
+interface Song {
+  duration: string | null;
+  embed: Embed;
+  id: string;
+  title: string;
+  url: string;
+}
+
+interface AddSongParameters {
+  embed: Embed;
+  insertFirst?: boolean;
+  url: string;
+}
+
+interface AddPlaylistParameters {
+  embed: Embed;
+  url: string;
+}
 
 export class PlaylistManager {
   guildId: string;
   player: AudioPlayer;
-  songs: string[];
+  songs: Song[];
+  channel: VoiceBasedChannel;
 
-  constructor(guildId: string, player: AudioPlayer) {
+  constructor(
+    guildId: string,
+    player: AudioPlayer,
+    channel: VoiceBasedChannel,
+  ) {
     this.guildId = guildId;
     this.player = player;
     this.songs = [];
+    this.channel = channel;
 
     player.on('stateChange', async (_, newState) => {
-      if (newState.status === AudioPlayerStatus.Idle) {
+      if (
+        newState.status === AudioPlayerStatus.Idle &&
+        player.playable.length !== 0
+      ) {
+        if (this.songs.length) {
+          const { embed, title, url } = this.songs[0];
+          const { avatarUrl, songThumbnail, username } = embed;
+
+          const embedInfo = songBuilder.build({
+            action: 'Reproduciendo canción',
+            avatarUrl,
+            songThumbnail,
+            title,
+            url,
+            username,
+          });
+          this.channel.send({ embeds: [embedInfo] });
+        }
+
         await this.playNext();
       }
     });
@@ -27,21 +78,32 @@ export class PlaylistManager {
     this.songs = shuffle(this.songs);
   }
 
-  async addSong(song: string) {
-    this.songs.push(song);
-    await this.checkAndPlay();
-  }
+  async addSong({ embed, url, insertFirst }: AddSongParameters) {
+    const video = await pldl.service.getVideo(url);
+    const song = { ...video, embed };
 
-  async addPlaylist(playlistURL: string) {
-    console.log('Playlist:', this.songs);
-    const playlist = await pldl(playlistURL);
-    console.log('Playlist:', this.songs);
-
-    for (const song of playlist.videos) {
-      this.songs.push(song.url);
+    if (insertFirst) {
+      this.songs.unshift(song);
+    } else {
+      this.songs.push(song);
     }
 
-    await this.checkAndPlay();
+    this.checkAndPlay().catch(console.error);
+    return song;
+  }
+
+  async addPlaylist({ embed, url }: AddPlaylistParameters) {
+    const playlist = await pldl(url);
+
+    for (const video of playlist.videos) {
+      this.songs.push({
+        ...video,
+        embed,
+      });
+    }
+
+    this.checkAndPlay().catch(console.error);
+    return playlist;
   }
 
   private async checkAndPlay() {
@@ -60,9 +122,9 @@ export class PlaylistManager {
     const song = this.songs.shift()!;
 
     // eslint-disable-next-line no-console
-    console.log(`Playing url: "${song}"`);
+    console.log(`Playing url: "${song.url}"`);
 
-    const stream = await pldl.service.downloadVideoUrl(song, {
+    const stream = await pldl.service.downloadVideoUrl(song.url, {
       filter: 'audioonly',
       quality: 'highestaudio',
     });

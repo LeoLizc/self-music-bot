@@ -1,7 +1,10 @@
 import { SlashCommandBuilder } from '../../core';
 import { playlistAdministrator } from '../services/administrator';
+import songBuilder from '../ux/song';
+import { AudioPlayerStatus } from '@discordjs/voice';
 import {
   type CommandInteractionOptionResolver,
+  EmbedBuilder,
   type GuildMember,
 } from 'discord.js';
 
@@ -12,28 +15,62 @@ const builder = new SlashCommandBuilder()
 builder.addStringOption((option) =>
   option
     .setName('cancion')
-    .setDescription('Nombre de la canción')
+    .setDescription('URL de la canción')
     .setRequired(true),
+);
+
+builder.addBooleanOption((option) =>
+  option
+    .setName('top')
+    .setDescription('Añadir como primera canción en la cola')
+    .setRequired(false),
 );
 
 builder.setAction(async (interaction) => {
   const resolver = interaction.options as CommandInteractionOptionResolver;
   const songName = resolver.getString('cancion')!;
+  const insertFirst = resolver.getBoolean('top') || false;
 
-  await interaction.reply(`Reproduciendo ${songName}`);
   const channel = (interaction.member as GuildMember)?.voice.channel;
-
   if (!channel) {
-    await interaction.followUp('Debes estar en un canal de voz');
+    await interaction.reply('Debes estar en un canal de voz');
     return;
   }
 
+  const playlist = playlistAdministrator.get(channel, true);
+  const isPlayerIdle = playlist.player.state.status === AudioPlayerStatus.Idle;
+
   try {
-    const playlist = playlistAdministrator.get(channel, true);
-    await playlist.addSong(songName);
+    const action = isPlayerIdle ? 'Reproduciendo' : 'Añadida';
+    const embed = {
+      avatarUrl: interaction.user.avatarURL(),
+      songThumbnail: interaction.user.avatarURL(),
+      username: interaction.user.displayName,
+    };
+    const song = await playlist.addSong({
+      embed,
+      insertFirst,
+      url: songName,
+    });
+    const embedInfo = songBuilder.build({
+      action,
+      avatarUrl: embed.avatarUrl,
+      songThumbnail: embed.songThumbnail,
+      title: song.title,
+      url: song.url,
+      username: embed.username,
+    });
+
+    await interaction.reply({
+      embeds: [embedInfo],
+    });
   } catch (error) {
     console.error(error);
-    await interaction.followUp('Ocurrió un error');
+    if (error instanceof Error && error.message === 'Video unavailable') {
+      await interaction.reply('Video no disponible');
+    } else {
+      await interaction.reply('Ocurrió un error');
+    }
   }
 });
 
