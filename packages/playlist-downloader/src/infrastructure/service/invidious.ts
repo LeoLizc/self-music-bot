@@ -44,19 +44,17 @@ export class InvidiousService implements YTService {
     const videoId: string = ytdl.getVideoID(url);
 
     let responseApiVideo;
-    const numberAttempts1 = this.baseUrls.length; // max times to make the request - at least 1
+    const numberAttemptsApi = this.baseUrls.length; // max times to make the request - at least 1
     let errorApiVideo;
     let videoInfo;
 
-    for (let index = 0; index < numberAttempts1; index++) {
+    for (let index = 0; index < numberAttemptsApi; index++) {
       try {
-        console.log('Fetching API URL', `${this.apiBaseUrl}/videos/${videoId}`);
-        responseApiVideo = await fetchWithTimeout(
-          `${this.apiBaseUrl}/videos/${videoId}`,
-          {
-            timeout: 3_000,
-          },
-        );
+        const urlFetch = `${this.apiBaseUrl}/videos/${videoId}`;
+        console.log('Fetching API URL', urlFetch);
+        responseApiVideo = await fetchWithTimeout(urlFetch, {
+          timeout: 3_000,
+        });
 
         videoInfo = await responseApiVideo.json();
         errorApiVideo = undefined;
@@ -78,7 +76,7 @@ export class InvidiousService implements YTService {
     for (let index = 0; index < numberAttemptsHtml; index++) {
       try {
         const videoUrlInvidious = `${this.baseUrl}/watch?v=${videoId}`;
-        console.log(`Fetching ${videoUrlInvidious}`);
+        console.log(`Fetching HTML ${videoUrlInvidious}`);
 
         const responseHtml = await fetchWithTimeout(`${videoUrlInvidious}`, {
           timeout: 8_000,
@@ -141,9 +139,34 @@ export class InvidiousService implements YTService {
   async getPlaylist(url: string, _?: PlaylistOptions): Promise<Playlist> {
     const playlistId: string = await ytpl.getPlaylistID(url);
 
-    console.log(`Getting playlist ${this.apiBaseUrl}/playlists/${playlistId}`);
-    const response = await fetch(`${this.apiBaseUrl}/playlists/${playlistId}`);
-    const playlist = await response.json();
+    const numberAttemptsApi = this.baseUrls.length; // max times to make the request - at least 1
+    let errorApiVideo;
+    let playlist;
+
+    for (let index = 0; index < numberAttemptsApi; index++) {
+      try {
+        const urlFetch = `${this.apiBaseUrl}/playlists/${playlistId}`;
+        console.log(`Getting playlist ${urlFetch}`);
+        const response = await fetchWithTimeout(urlFetch, {
+          timeout: 3_000,
+        });
+        playlist = await response.json();
+
+        errorApiVideo = undefined;
+        break;
+      } catch (error) {
+        errorApiVideo = error;
+        this.nextApiBaseUrl();
+      }
+    }
+
+    if (errorApiVideo || !playlist) {
+      throw errorApiVideo;
+    }
+
+    if (playlist['error']) {
+      throw new Error(playlist['error']);
+    }
 
     return {
       id: playlist.playlistId,
