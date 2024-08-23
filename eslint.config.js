@@ -44,6 +44,7 @@ export default [
       ],
       'no-console': 'warn',
       'no-param-reassign': 'warn',
+      'promise/prefer-await-to-then': 'warn',
     },
   },
 ];
