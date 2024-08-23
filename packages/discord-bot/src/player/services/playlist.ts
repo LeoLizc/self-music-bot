@@ -10,7 +10,6 @@ import { pldl } from 'pldl';
 
 interface Embed {
   avatarUrl: string | null;
-  songThumbnail: string | null;
   username: string;
 }
 
@@ -20,6 +19,7 @@ interface Song {
   id: string;
   title: string;
   url: string;
+  thumbnailUrl?: string;
 }
 
 interface AddSongParameters {
@@ -55,13 +55,13 @@ export class PlaylistManager {
         player.playable.length !== 0
       ) {
         if (this.songs.length) {
-          const { embed, title, url } = this.songs[0];
-          const { avatarUrl, songThumbnail, username } = embed;
+          const { embed, title, url, thumbnailUrl } = this.songs[0];
+          const { avatarUrl, username } = embed;
 
           const embedInfo = songBuilder.build({
             action: 'Reproduciendo canción',
             avatarUrl,
-            songThumbnail,
+            songThumbnail: thumbnailUrl,
             title,
             url,
             username,

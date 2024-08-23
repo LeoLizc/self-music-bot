@@ -58,7 +58,7 @@ builder.setAction(async (interaction) => {
       const embedSong = songBuilder.build({
         action: 'Reproduciendo',
         avatarUrl: interaction.user.avatarURL(),
-        songThumbnail: interaction.user.avatarURL(),
+        songThumbnail: playlistInfo.videos[0].thumbnailUrl,
         title: playlistInfo.videos[0].title,
         url: playlistInfo.videos[0].url,
         username: interaction.user.displayName,

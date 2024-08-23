@@ -119,6 +119,7 @@ export class InvidiousService implements YTService {
     return {
       id: videoInfo.videoId,
       stream: stream!,
+      thumbnailUrl: this.findThumbnail(videoInfo),
       title: videoInfo.title,
       url,
     };
@@ -130,6 +131,7 @@ export class InvidiousService implements YTService {
     return {
       id: video.id,
       stream,
+      thumbnailUrl: video.thumbnailUrl,
       title: video.title,
       url: video.url,
     };
@@ -174,6 +176,7 @@ export class InvidiousService implements YTService {
       videos: playlist.videos.map((video: Record<string, unknown>) => ({
         duration: video.lengthSeconds,
         id: video.videoId,
+        thumbnailUrl: this.findThumbnail(video),
         title: video.title,
         url: `https://www.youtube.com/watch?v=${video.videoId}`,
       })),
@@ -185,6 +188,7 @@ export class InvidiousService implements YTService {
     return {
       duration: info.videoDetails.lengthSeconds,
       id: info.videoDetails.videoId,
+      thumbnailUrl: info.thumbnail_url,
       title: info.videoDetails.title,
       url: info.videoDetails.video_url,
     };
@@ -208,5 +212,16 @@ export class InvidiousService implements YTService {
 
     const readableStream = response.body as unknown as Readable;
     return readableStream;
+  }
+
+  private findThumbnail(videoInfo: Record<string, unknown>) {
+    const thumbnails = videoInfo.videoThumbnails as Array<
+      Record<string, unknown>
+    >;
+    let index = thumbnails.findIndex(
+      (vidThumb: Record<string, unknown>) => vidThumb.quality === 'medium',
+    );
+    if (index === -1) index = 0;
+    return String(thumbnails[index].url);
   }
 }

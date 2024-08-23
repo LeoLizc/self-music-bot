@@ -4,7 +4,6 @@ import songBuilder from '../ux/song';
 import { AudioPlayerStatus } from '@discordjs/voice';
 import {
   type CommandInteractionOptionResolver,
-  EmbedBuilder,
   type GuildMember,
 } from 'discord.js';
 
@@ -44,7 +43,6 @@ builder.setAction(async (interaction) => {
     const action = isPlayerIdle ? 'Reproduciendo' : 'Añadida';
     const embed = {
       avatarUrl: interaction.user.avatarURL(),
-      songThumbnail: interaction.user.avatarURL(),
       username: interaction.user.displayName,
     };
     const song = await playlist.addSong({
@@ -55,7 +53,7 @@ builder.setAction(async (interaction) => {
     const embedInfo = songBuilder.build({
       action,
       avatarUrl: embed.avatarUrl,
-      songThumbnail: embed.songThumbnail,
+      songThumbnail: song.thumbnailUrl,
       title: song.title,
       url: song.url,
       username: embed.username,

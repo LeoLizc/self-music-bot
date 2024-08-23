@@ -3,7 +3,7 @@ import { EmbedBuilder } from 'discord.js';
 interface Options {
   action: string;
   avatarUrl: string | null;
-  songThumbnail: string | null;
+  songThumbnail?: string | null;
   title: string;
   url: string;
   username: string;
@@ -25,7 +25,7 @@ export default {
       .setAuthor({
         name: action,
       })
-      .setThumbnail(songThumbnail)
+      .setThumbnail(songThumbnail || null)
       .setFooter({
         iconURL: avatarUrl || undefined,
         text: `Añadido por ${username}`,
