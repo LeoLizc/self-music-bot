@@ -72,6 +72,8 @@ export class PlaylistManager {
         await this.playNext();
       }
     });
+    
+    player.on('error', console.error);
   }
 
   shuffle() {

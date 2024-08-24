@@ -188,7 +188,7 @@ export class InvidiousService implements YTService {
     return {
       duration: info.videoDetails.lengthSeconds,
       id: info.videoDetails.videoId,
-      thumbnailUrl: info.thumbnail_url,
+      thumbnailUrl: info.videoDetails.thumbnails[0].url,
       title: info.videoDetails.title,
       url: info.videoDetails.video_url,
     };

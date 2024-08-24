@@ -22,9 +22,11 @@ builder.setAction(async (interaction) => {
     return;
   }
 
-  await interaction.deferReply({ ephemeral: true });
-  if (playlist.songs.length) {
-    const { embed, title, url, thumbnailUrl } = playlist.songs[0];
+  await interaction.deferReply();
+  const topSong = playlist.songs[0];
+
+  if (await playlist.skip()) {
+    const { embed, title, url, thumbnailUrl } = topSong;
     const { avatarUrl, username } = embed;
 
     const embedInfo = songBuilder.build({
