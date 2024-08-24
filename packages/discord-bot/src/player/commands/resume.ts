@@ -21,12 +21,10 @@ builder.setAction(async (interaction) => {
     return;
   }
 
-  await interaction.deferReply();
-
   if (playlist.resume()) {
-    await interaction.editReply('Lista de reproducción reanudada');
+    await interaction.reply('Lista de reproducción reanudada');
   } else {
-    await interaction.editReply('No se pudo reanudar la lista de reproducción');
+    await interaction.reply('No se pudo reanudar la lista de reproducción');
   }
 });
 

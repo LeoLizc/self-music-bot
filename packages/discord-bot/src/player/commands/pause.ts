@@ -21,12 +21,10 @@ builder.setAction(async (interaction) => {
     return;
   }
 
-  await interaction.deferReply();
-
   if (playlist.pause()) {
-    await interaction.editReply('Lista de reproducción pausada');
+    await interaction.reply('Lista de reproducción pausada');
   } else {
-    await interaction.editReply('No se pudo pausar la lista de reproducción');
+    await interaction.reply('No se pudo pausar la lista de reproducción');
   }
 });
 

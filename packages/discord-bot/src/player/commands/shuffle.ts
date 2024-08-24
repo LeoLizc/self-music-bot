@@ -21,10 +21,8 @@ builder.setAction(async (interaction) => {
     return;
   }
 
-  await interaction.deferReply();
-
   playlist.shuffle();
-  await interaction.editReply('Lista de reproducción reordenada');
+  await interaction.reply('Lista de reproducción reordenada');
 });
 
 export const shuffleCommand = builder;
