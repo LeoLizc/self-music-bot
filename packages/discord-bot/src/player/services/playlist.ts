@@ -160,11 +160,11 @@ export class PlaylistManager {
   }
 
   pause() {
-    this.player.pause();
+    return this.player.pause(true);
   }
 
   resume() {
-    this.player.unpause();
+    return this.player.unpause();
   }
 
   async removeSong(index: number) {
